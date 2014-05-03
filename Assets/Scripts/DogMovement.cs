@@ -1,19 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+[RequireComponent(typeof(CharacterMotor))]
 
 public class DogMovement : MonoBehaviour {
 	public float angle = 1.0f;
-	public int step = 1;
-	public float stepSize = 48;
+	public float speed = 1.0f;
+	CharacterMotor motor;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		motor = GetComponent<CharacterMotor>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Rotate ();
-		Move ();
+		Move();
 	}
+	
+	
+	private void Move(){
+		print(this.transform.position);
+		print(this.transform.forward * speed);
+		motor.inputMoveDirection =(this.transform.forward * speed);
+	
+	}
+	
 	
 	private void Rotate(){
 		if(Random.Range (0,59) < 4)	{
@@ -26,8 +37,4 @@ public class DogMovement : MonoBehaviour {
 		}	
 	}
 	
-	private void Move(){
-		this.transform.Translate(Vector3.forward * step * stepSize);
-		
-	}
 }
