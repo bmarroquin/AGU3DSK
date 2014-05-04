@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\CharacterMotor.cs" />
      <Compile Include="Assets\Scripts\CloudBehavior.cs" />
      <Compile Include="Assets\Scripts\DogMovement.cs" />
+     <Compile Include="Assets\Scripts\DogPound.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
