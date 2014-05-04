@@ -15,7 +15,10 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 		Vector3 moveDirection = Vector3.zero;
 		if(Input.GetKey(KeyCode.UpArrow)){
-			 moveDirection = transform.forward * speed;
+			 moveDirection += transform.forward * speed;
+		}
+		if(Input.GetKey(KeyCode.DownArrow)){
+			moveDirection += transform.forward * -speed;
 		}
 		motor.inputMoveDirection =moveDirection;
 		if(Input.GetKey(KeyCode.LeftArrow)){

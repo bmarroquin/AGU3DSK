@@ -13,8 +13,8 @@ public class DogPound : MonoBehaviour {
 	void Start () {
 		for(int i = 0; i < DogsToSpawn; i++){
 			// Generate random position
-			float x = Random.Range(0,511);
-			float z = Random.Range(0,511);
+			float x = Random.Range(0,100);
+			float z = Random.Range(0,100);
 			//Grab the height and make sure dog is above.
 			float height = terrain.SampleHeight(new Vector3(x,0,z))+1.4f;
 			//  50/50 chance of having a mini dog or regular dog. 
