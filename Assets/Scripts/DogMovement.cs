@@ -19,8 +19,6 @@ public class DogMovement : MonoBehaviour {
 	
 	
 	private void Move(){
-		print(this.transform.position);
-		print(this.transform.forward * speed);
 		motor.inputMoveDirection =(this.transform.forward * speed);
 	
 	}
