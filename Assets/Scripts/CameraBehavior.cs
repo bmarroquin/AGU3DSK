@@ -2,14 +2,18 @@
 using System.Collections;
 
 public class CameraBehavior : MonoBehaviour {
+	//Reference to curently active camera.
 	private Camera active;
+	
+	//Six cameras in the world;
 	public Camera world;
 	public Camera playerFP;
 	public Camera playerTP;
 	public Camera npFP;
 	public Camera npTP;
+	//Keeps track of what camera to use.
 	private int counter = 0;
-	// Use this for initialization
+	// When initializing activate only the world camera.
 	void Start () {
 		active = world;
 		active.gameObject.SetActive(true);
@@ -19,11 +23,13 @@ public class CameraBehavior : MonoBehaviour {
 		npTP.gameObject.SetActive(false);
 	}
 	
-	// Update is called once per frame
+	
 	void Update () {
+		// If the 'c' key is pressed increase the counter and deactivate camera.
 		if(Input.GetKeyDown("c")){
 			counter++;
 			active.gameObject.SetActive(false);
+			//Choose new activecamera.
 			switch(counter%5){
 				case 0: active = world; break;
 				case 1: active = playerFP; break;
@@ -31,6 +37,7 @@ public class CameraBehavior : MonoBehaviour {
 				case 3: active = npFP; break;
 				case 4: active = npTP; break;
 			}
+			//Activate new camera.
 			active.gameObject.SetActive(true);
 		}
 	}
