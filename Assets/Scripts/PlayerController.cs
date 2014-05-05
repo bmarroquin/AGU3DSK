@@ -28,4 +28,18 @@ public class PlayerController : MonoBehaviour {
 			transform.Rotate(Vector3.up*turnSpeed);
 		}
 	}
+
+	void onTriggerEnter (Collider other) {
+		Debug.Log("Collider");
+	}
+
+	void OnCollisionEnter (Collision  collision) {
+		Debug.Log("collision");
+	}
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if (hit.gameObject.name == "Cube") {
+			hit.gameObject.GetComponent<Treasure>().isTagged = true;
+		}
+	}
 }
