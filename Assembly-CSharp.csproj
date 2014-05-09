@@ -52,6 +52,8 @@
      <Compile Include="Assets\Scripts\CreatorOfHeavens.cs" />
      <Compile Include="Assets\Scripts\DogMovement.cs" />
      <Compile Include="Assets\Scripts\DogPound.cs" />
+     <Compile Include="Assets\Scripts\NPController.cs" />
+     <Compile Include="Assets\Scripts\Path.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
