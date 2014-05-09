@@ -33,20 +33,8 @@ public class NPController : MonoBehaviour {
 		GameObject[] treasures = GameObject.FindGameObjectsWithTag("treasure");
 		Vector3 min = Vector3.zero;
 
-//		for(int i =0; i<treasures.Length; i++){
-//			//if (treasures[i].GetComponent<Treasure>().isTagged) { // distance stuff? 
-//			//	continue;
-//			//}
-//			if(Vector3.zero == min && (treasures[i].GetComponent<Treasure>().isTagged == false)){
-//				min = treasures[i].transform.position;
-//			}
-//			if(Vector3.Distance(treasures[i].transform.position, transform.position) < Vector3.Distance(min, transform.position) && (treasures[i].GetComponent<Treasure>().isTagged == false)){
-//				min = treasures[i].transform.position;
-//			}
-//		}
-
 		foreach (GameObject treasure in GameObject.FindGameObjectsWithTag("treasure")) {
-			if (treasure.GetComponent<Treasure>().isTagged) {
+			if (!treasure.GetComponent<Treasure>().isTagged) {
 				if(Vector3.zero == min) {
 					min = treasure.transform.position;
 				}
