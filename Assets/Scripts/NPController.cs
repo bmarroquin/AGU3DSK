@@ -8,6 +8,8 @@ public class NPController : MonoBehaviour {
 	Terrain terrain;
 	private Path mainPath;
 	Vector3 nextGoal;
+	Vector3 nextTreasure;
+	bool treasureMode = false;
 	
 	void Start () {
 //		navNodePrefab = Resources.Load<GameObject>("Prefabs/NanNode");
@@ -27,14 +29,57 @@ public class NPController : MonoBehaviour {
 		mainPath = new Path(path, navNodePrefab);
 	}
 	
-
+	private Vector3 findNearestTreasure(){
+		GameObject[] treasures = GameObject.FindGameObjectsWithTag("treasure");
+		Vector3 min = Vector3.zero;
+		
+		for(int i =0; i<treasures.Length; i++){
+			//if (treasures[i].GetComponent<Treasure>().isTagged) { // distance stuff? 
+			//	continue;
+			//}
+			if(Vector3.zero == min){
+				min = treasures[i].transform.position;
+			}
+			if(Vector3.Distance(treasures[i].transform.position, transform.position) < Vector3.Distance(min, transform.position)){
+				min = treasures[i].transform.position;
+			}
+		}
+		return min;
+	}
+	
+	public void SwitchToTreasureMode(){
+		if(treasureMode){
+			return;
+		}
+		treasureMode = true;
+		nextTreasure = findNearestTreasure();
+		if(nextTreasure==Vector3.zero){
+			treasureMode = false;
+			return;
+		}
+		transform.LookAt(CalculateLookAtVector(nextTreasure));
+	}
+	
+	public void SwitchToPathMode(){
+		treasureMode = false;
+		transform.LookAt(CalculateLookAtVector(nextGoal));
+	}
 	// Update is called once per frame
 	void Update () {
-		if(Vector3.Distance(transform.position, nextGoal)<snapDistance){
-			nextGoal = mainPath.GetNextNode();
-			transform.LookAt(CalculateLookAtVector(nextGoal));
+		if(Input.GetKeyDown(KeyCode.N)){
+			SwitchToTreasureMode();
 		}
-		
+		if(treasureMode){
+			if(Vector3.Distance(transform.position, nextTreasure)<snapDistance){
+				SwitchToPathMode();
+			}
+		}
+		else{
+			if(Vector3.Distance(transform.position, nextGoal)<snapDistance){
+				nextGoal = mainPath.GetNextNode();
+				transform.LookAt(CalculateLookAtVector(nextGoal));
+			}
+		}
 		Vector3 newPos= transform.position + transform.forward * speed * Time.deltaTime;
 		transform.position = new Vector3(newPos.x, terrain.SampleHeight(new Vector3(newPos.x,0, newPos.z)), newPos.z);
 	}
