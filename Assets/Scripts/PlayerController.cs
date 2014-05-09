@@ -29,14 +29,6 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void onTriggerEnter (Collider other) {
-		Debug.Log("Collider");
-	}
-
-	void OnCollisionEnter (Collision  collision) {
-		Debug.Log("collision");
-	}
-
 	void OnControllerColliderHit(ControllerColliderHit hit) {
 
 		if (hit.gameObject.tag == "treasure") {

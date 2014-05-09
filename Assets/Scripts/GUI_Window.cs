@@ -53,15 +53,10 @@ public class GUI_Window : MonoBehaviour {
 			int npc_tagged = 0;
 			
 			foreach (GameObject treasure in GameObject.FindGameObjectsWithTag("treasure")) {
-				if (treasure.GetComponent<Treasure>().isTagged) {
-					treasures_tagged++;
+				if (!treasure.GetComponent<Treasure>().isTagged) {
+					// distance stuff?
 				}
 
-				if (treasure.GetComponent<Treasure>().whoTagged == "Player") {
-					player_tagged++;
-				} else if (treasure.GetComponent<Treasure>().whoTagged == "NPAgent") {
-					npc_tagged++;
-				}
 			}
 			
 			if ((treasures - treasures_tagged) == 0) {
