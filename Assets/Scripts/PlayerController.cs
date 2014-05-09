@@ -38,8 +38,18 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if (hit.gameObject.name == "Cube") {
-			hit.gameObject.GetComponent<Treasure>().isTagged = true;
+
+		if (hit.gameObject.tag == "treasure") {
+
+			GameObject treasure = hit.gameObject;
+			GameObject taggedTreasure = (GameObject)Instantiate(Resources.Load("MiniDog"), treasure.transform.position, treasure.transform.rotation);
+			Destroy(treasure);
+
+			taggedTreasure.AddComponent("Treasure");
+			taggedTreasure.tag = "treasure";
+			taggedTreasure.GetComponent<Treasure>().isTagged = true;
+			taggedTreasure.GetComponent<Treasure>().whoTagged = "Player";
+
 		}
 	}
 }

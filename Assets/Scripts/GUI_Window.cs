@@ -3,13 +3,15 @@ using System.Collections;
 
 public class GUI_Window : MonoBehaviour {
 
-	public Rect windowSize = new Rect (15, 15, 350, 100);
+	public Rect windowSize = new Rect (15, 15, 350, 250);
 	public Treasure script;
 	public string slot1;
 	public string slot2;
 	public string slot3;
 
 	public string[] slots; 
+
+	Color slot1Color;
 
 	public int panel_num = 0;
 
@@ -19,6 +21,8 @@ public class GUI_Window : MonoBehaviour {
 		slots[0] = "slot1";
 		slots[1] = "slot2";
 		slots[2] = "slot3";
+		slot1Color = Color.white;
+
 	}
 	private void OnGUI() {
 		GUI.Window (0, windowSize, InfoPane, "Info Window");
@@ -26,9 +30,11 @@ public class GUI_Window : MonoBehaviour {
 
 	private void InfoPane(int id) {
 
-		GUI.Label(new Rect(20, 20, 150, 50), slots[0]);
-		GUI.Label(new Rect(20, 35, 150, 50), slots[1]);
-		GUI.Label(new Rect(20, 50, 150, 50), slots[2]);
+		GUI.Label(new Rect(20, 20, 150, 250), slots[0]);
+		GUI.color = slot1Color;
+		GUI.Label(new Rect(20, 35, 150, 250), slots[1]);
+		GUI.color = Color.white;
+		GUI.Label(new Rect(20, 50, 150, 250), slots[2]);
 	}
 
 	void Update () {
@@ -43,17 +49,30 @@ public class GUI_Window : MonoBehaviour {
 			
 			int treasures = GameObject.FindGameObjectsWithTag("treasure").Length;
 			int treasures_tagged = 0;
+			int player_tagged = 0;
+			int npc_tagged = 0;
 			
 			foreach (GameObject treasure in GameObject.FindGameObjectsWithTag("treasure")) {
 				if (treasure.GetComponent<Treasure>().isTagged) {
 					treasures_tagged++;
 				}
+
+				if (treasure.GetComponent<Treasure>().whoTagged == "Player") {
+					player_tagged++;
+				} else if (treasure.GetComponent<Treasure>().whoTagged == "NPAgent") {
+					npc_tagged++;
+				}
 			}
 			
-			
-			slots[0] = "Treasures: " + treasures;
-			slots[1] = "Treasures Tagged: " + treasures_tagged;
-			slots[2] = "slot3";
+			if ((treasures - treasures_tagged) == 0) {
+				slots[1] = (player_tagged > player_tagged)?"Player Wins":"NPAgent Wins";
+				slot1Color = Color.red;
+			} else {
+				slots[1] = "Treasures Tagged: " + (treasures - treasures_tagged);
+			}
+
+			slots[0] = "Treasures Total: " + treasures;
+			slots[2] = "Scores: Player ("+player_tagged+") NPAgent ("+npc_tagged+")";
 			break;
 		case 1:
 			slots[0] = "slot4";

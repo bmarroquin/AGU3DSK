@@ -4,6 +4,7 @@ using System.Collections;
 public class Treasure : MonoBehaviour {
 
 	public bool isTagged = false;
+	public string whoTagged = "";
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,4 @@ public class Treasure : MonoBehaviour {
 		return isTagged;
 	}
 
-	void onTriggerEnter (Collider other) {
-		Debug.Log("YOU HIT ME");
-	}
 }
