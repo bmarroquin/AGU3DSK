@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GUI_Window : MonoBehaviour {
 
-	public Rect windowSize = new Rect (15, 15, 350, 250);
+	public Rect windowSize = new Rect (15, 15, 350, 300);
 	public Treasure script;
 	public string slot1;
 	public string slot2;
@@ -30,11 +30,11 @@ public class GUI_Window : MonoBehaviour {
 
 	private void InfoPane(int id) {
 
-		GUI.Label(new Rect(20, 20, 150, 250), slots[0]);
+		GUI.Label(new Rect(20, 20, 150, 300), slots[0]);
 		GUI.color = slot1Color;
-		GUI.Label(new Rect(20, 35, 150, 250), slots[1]);
+		GUI.Label(new Rect(20, 35, 150, 300), slots[1]);
 		GUI.color = Color.white;
-		GUI.Label(new Rect(20, 50, 150, 250), slots[2]);
+		GUI.Label(new Rect(20, 50, 150, 300), slots[2]);
 	}
 
 	void Update () {
@@ -75,9 +75,12 @@ public class GUI_Window : MonoBehaviour {
 			slots[2] = "Scores: Player ("+player_tagged+") NPAgent ("+npc_tagged+")";
 			break;
 		case 1:
-			slots[0] = "slot4";
-			slots[1] = "slot5";
-			slots[2] = "slot6";
+			GameObject player = GameObject.Find("Player");
+			GameObject npc = GameObject.Find("NPC");
+			NPController np = npc.GetComponent<NPController>();
+			slots[0] = "Player"+player.transform.position;
+			slots[1] = "NPC"+npc.transform.position;
+			slots[2] = "Next"+np.NextTarget;
 			break;
 		default:
 			// do nothing

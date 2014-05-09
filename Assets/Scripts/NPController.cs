@@ -5,11 +5,23 @@ public class NPController : MonoBehaviour {
 	public GameObject navNodePrefab;
 	public float speed = 1f;
 	public float snapDistance = 1.5f;
+	public float treasureSnap = 1.5f;
 	Terrain terrain;
 	private Path mainPath;
 	Vector3 nextGoal;
 	Vector3 nextTreasure;
 	bool treasureMode = false;
+	
+	public Vector3 NextTarget{
+		get{
+			if(treasureMode){
+				return nextTreasure;
+			}
+			else{
+				return nextGoal;
+			}
+		}
+	}
 	
 	void Start () {
 //		navNodePrefab = Resources.Load<GameObject>("Prefabs/NanNode");
@@ -72,7 +84,7 @@ public class NPController : MonoBehaviour {
 			SwitchToTreasureMode();
 		}
 		if(treasureMode){
-			if(Vector3.Distance(transform.position, nextTreasure)<snapDistance){
+			if(Vector3.Distance(transform.position, nextTreasure)<treasureSnap){
 				SwitchToPathMode();
 			}
 		}
@@ -93,8 +105,24 @@ public class NPController : MonoBehaviour {
 	}
 
 
-	void OnCollisionEnter (Collision collision ) {
-		Debug.Log ("OnCollisionEnter");
+	void OnTriggerEnter (Collider hit ) {
+		if (hit.gameObject.tag == "treasure") {
+			
+			GameObject treasure = hit.gameObject;
+			
+			if (treasure.GetComponent<Treasure>().isTagged == false) {
+				GameObject taggedTreasure = (GameObject)Instantiate(Resources.Load("treasure_tagged"), treasure.transform.position, treasure.transform.rotation);
+				Destroy(treasure);
+				
+				taggedTreasure.AddComponent("Treasure");
+				taggedTreasure.tag = "treasure";
+				taggedTreasure.GetComponent<Treasure>().isTagged = true;
+				taggedTreasure.GetComponent<Treasure>().whoTagged = "NPAgent";
+			}			
+		}
+	}
+	void OnCollisionEnter(Collision collision){
+		print ("boom");
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {	
