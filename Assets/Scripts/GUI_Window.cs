@@ -65,7 +65,7 @@ public class GUI_Window : MonoBehaviour {
 			}
 			
 			if ((treasures - treasures_tagged) == 0) {
-				slots[1] = (player_tagged > player_tagged)?"Player Wins":"NPAgent Wins";
+				slots[1] = (player_tagged > npc_tagged)?"Player Wins":"NPAgent Wins";
 				slot1Color = Color.red;
 			} else {
 				slots[1] = "Treasures Tagged: " + (treasures - treasures_tagged);

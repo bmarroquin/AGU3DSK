@@ -93,7 +93,12 @@ public class NPController : MonoBehaviour {
 	}
 
 
-	void OnControllerColliderHit(ControllerColliderHit hit) {		
+	void OnCollisionEnter (Collision collision ) {
+		Debug.Log ("OnCollisionEnter");
+	}
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {	
+		Debug.Log ("ControllerColliderHit");
 		if (hit.gameObject.tag == "treasure") {
 			
 			GameObject treasure = hit.gameObject;
@@ -105,7 +110,7 @@ public class NPController : MonoBehaviour {
 				taggedTreasure.AddComponent("Treasure");
 				taggedTreasure.tag = "treasure";
 				taggedTreasure.GetComponent<Treasure>().isTagged = true;
-				taggedTreasure.GetComponent<Treasure>().whoTagged = "Player";
+				taggedTreasure.GetComponent<Treasure>().whoTagged = "NPAgent";
 			}			
 		}
 	}

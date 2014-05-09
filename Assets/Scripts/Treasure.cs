@@ -23,5 +23,9 @@ public class Treasure : MonoBehaviour {
 	bool IsTagged() {
 		return isTagged;
 	}
+
+	void OnCollisionEnter (Collision collision ) {
+		Debug.Log ("OnCollisionEnter");
+	}
 	
 }
