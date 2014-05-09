@@ -32,18 +32,20 @@ public class NPController : MonoBehaviour {
 	private Vector3 findNearestTreasure(){
 		GameObject[] treasures = GameObject.FindGameObjectsWithTag("treasure");
 		Vector3 min = Vector3.zero;
-		
-		for(int i =0; i<treasures.Length; i++){
-			//if (treasures[i].GetComponent<Treasure>().isTagged) { // distance stuff? 
-			//	continue;
-			//}
-			if(Vector3.zero == min){
-				min = treasures[i].transform.position;
-			}
-			if(Vector3.Distance(treasures[i].transform.position, transform.position) < Vector3.Distance(min, transform.position)){
-				min = treasures[i].transform.position;
+
+		foreach (GameObject treasure in GameObject.FindGameObjectsWithTag("treasure")) {
+			if (!treasure.GetComponent<Treasure>().isTagged) {
+				if(Vector3.zero == min) {
+					min = treasure.transform.position;
+				}
+
+				if(Vector3.Distance(treasure.transform.position, transform.position) < Vector3.Distance(min, transform.position)) {
+					min = treasure.transform.position;
+				}
+			
 			}
 		}
+
 		return min;
 	}
 	
@@ -88,5 +90,28 @@ public class NPController : MonoBehaviour {
 	/// </summary>
 	private Vector3 CalculateLookAtVector(Vector3 pos){
 		return new Vector3(pos.x, transform.position.y, pos.z);
+	}
+
+
+	void OnCollisionEnter (Collision collision ) {
+		Debug.Log ("OnCollisionEnter");
+	}
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {	
+		Debug.Log ("ControllerColliderHit");
+		if (hit.gameObject.tag == "treasure") {
+			
+			GameObject treasure = hit.gameObject;
+			
+			if (treasure.GetComponent<Treasure>().isTagged == false) {
+				GameObject taggedTreasure = (GameObject)Instantiate(Resources.Load("treasure_tagged"), treasure.transform.position, treasure.transform.rotation);
+				Destroy(treasure);
+				
+				taggedTreasure.AddComponent("Treasure");
+				taggedTreasure.tag = "treasure";
+				taggedTreasure.GetComponent<Treasure>().isTagged = true;
+				taggedTreasure.GetComponent<Treasure>().whoTagged = "NPAgent";
+			}			
+		}
 	}
 }

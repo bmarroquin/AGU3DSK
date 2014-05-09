@@ -28,4 +28,21 @@ public class PlayerController : MonoBehaviour {
 			transform.Rotate(Vector3.up*turnSpeed);
 		}
 	}
+
+	void OnControllerColliderHit(ControllerColliderHit hit) {		
+		if (hit.gameObject.tag == "treasure") {
+
+			GameObject treasure = hit.gameObject;
+
+			if (treasure.GetComponent<Treasure>().isTagged == false) {
+				GameObject taggedTreasure = (GameObject)Instantiate(Resources.Load("treasure_tagged"), treasure.transform.position, treasure.transform.rotation);
+				Destroy(treasure);
+				
+				taggedTreasure.AddComponent("Treasure");
+				taggedTreasure.tag = "treasure";
+				taggedTreasure.GetComponent<Treasure>().isTagged = true;
+				taggedTreasure.GetComponent<Treasure>().whoTagged = "Player";
+			}			
+		}
+	}
 }
